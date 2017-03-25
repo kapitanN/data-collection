@@ -11,68 +11,34 @@
 
     <h:body>
 
-        <!--<h:form>-->
-            <!--<p:outputLabel id="labelId" title="OutputLabel title" value="#{mainBean.inputText}"/>-->
+        <h:button value="Add Field" outcome="add"/>
 
-            <!--<p:inputText id="inputTextId" placeholder="#{mainBean.inputText}" title="From Managed Bean"-->
-                    <!--value="#{mainBean.inputText}"/>-->
-
-            <!--<br/>-->
-            <!--<p:outputLabel value="Пример Ajax Обновления" for="ajaxBtnId"/>-->
-            <!--<p:commandButton id="ajaxBtnId" value="Обновить только поля"-->
-                             <!--action="#{mainBean.showMessage}"-->
-                             <!--update="labelId, inputTextId, growlMessageId" />-->
-
-            <!--<p:growl id="growlMessageId" showDetail="true" widgetVar="growlMessageId"/>-->
-        <!--</h:form>-->
-
-        <h3>Responsive</h3>
         <h:form>
-            <h:commandButton value="Submit" action="#{fieldsBean.saveUser}"/>
-        <p:panelGrid columns="6" layout="grid">
-            <h:outputText value="Label" />
-            <h:outputText value="Type" />
-            <h:outputText value="Required" />
-            <h:outputText value="Active" />
-            <h:outputText value="" />
-            <h:outputText value="" />
+            <h:dataTable value = "#{mainBean.fields}" var = "fields">
 
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="edit" />
-            <h:outputText value="delete" />
+                <h:column>
+                    <f:facet name = "header">Label</f:facet>
+                    #{fields.label}
+                </h:column>
 
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="edit" />
-            <h:outputText value="delete" />
+                <h:column>
+                    <f:facet name = "header">Type</f:facet>
+                    #{fields.type}
+                </h:column>
 
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="edit" />
-            <h:outputText value="delete" />
+                <h:column>
+                    <f:facet name = "header">Required</f:facet>
+                    #{fields.required}
+                </h:column>
 
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="edit" />
-            <h:outputText value="delete" />
+                <h:column>
+                    <f:facet name = "header">Is active</f:facet>
+                    #{fields.active}
+                </h:column>
 
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="Content" />
-            <h:outputText value="edit" />
-            <h:outputText value="delete" />
-        </p:panelGrid>
+            </h:dataTable>
         </h:form>
+
 
     </h:body>
 </f:view>

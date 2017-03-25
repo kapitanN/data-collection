@@ -1,7 +1,6 @@
-package com.beans;
+package com.Entities;
 
 
-import javax.faces.bean.ManagedBean;
 import javax.persistence.*;
 
 /**
@@ -11,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "fields", uniqueConstraints = {
         @UniqueConstraint(columnNames = "id")})
-public class FieldsBean {
+public class FieldEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
@@ -27,13 +26,13 @@ public class FieldsBean {
     @Column(name = "required")
     private boolean required;
 
-    @Column(name = "is_active")
-    private boolean isActive;
-    public Integer getFieldId() {
+    @Column(name = "active")
+    private boolean active;
+    public Integer getId() {
         return id;
     }
 
-    public void setFieldId(Integer id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -62,11 +61,11 @@ public class FieldsBean {
     }
 
     public boolean isActive() {
-        return isActive;
+        return active;
     }
 
     public void setActive(boolean active) {
-        isActive = active;
+        this.active = active;
     }
 
 

@@ -16,7 +16,7 @@
         <h:panelGrid title="JSF panelGrid Title" border="10" columns="2">
 
             <h:outputLabel value="JSF standart label"/>
-            <h:button value="JSF default button" title="JSF button Title" outcome="fields"/>
+            <h:button value="JSF default button" title="JSF button Title" outcome="fields" action = "#{fieldBean.getField}"/>
 
         </h:panelGrid>
 

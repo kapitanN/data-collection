@@ -1,4 +1,5 @@
-import com.beans.FieldsBean;
+import com.Entities.FieldEntity;
+import com.beans.FieldBean;
 import com.dao.FieldsDAO;
 import org.apache.log4j.Logger;
 import org.junit.Before;
@@ -28,18 +29,25 @@ public class FieldsTest {
     @Test
     public void getFieldTest(){
         LOGGER.info("get user test");
-//        FieldsBean fieldsBean = new FieldsBean();
-//        fieldsBean.setLabel("name");
-//        fieldsBean.setType("text");
-//        fieldsBean.setRequired(true);
-//        fieldsBean.setActive(true);
-        FieldsBean fieldsBean = fieldsDAO.getField(1);
-        assertEquals(CORRECT_LABEL, fieldsBean.getLabel());
+        FieldEntity fieldEntity = fieldsDAO.getField(1);
+        assertEquals(CORRECT_LABEL, fieldEntity.getLabel());
     }
 
     @Test
-    public void setUserTest(){
+    public void setFieldTest(){
         LOGGER.info("set user test");
-        fieldsDAO.setField(CORRECT_LABEL);
+        FieldBean entity = new FieldBean(CORRECT_LABEL,CORRECT_TYPE,CORRECT_REQUIRED,CORRECT_ACTIVE);
+        fieldsDAO.setField(entity);
+    }
+
+    @Test
+    public void deleteFieldTest(){
+        FieldEntity entity = new FieldEntity();
+        entity.setId(2);
+        entity.setLabel(CORRECT_LABEL);
+        entity.setType(CORRECT_TYPE);
+        entity.setRequired(CORRECT_REQUIRED);
+        entity.setActive(CORRECT_ACTIVE);
+        fieldsDAO.deleteField(entity);
     }
 }

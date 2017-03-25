@@ -23,7 +23,7 @@
     <property name="hibernate.hbm2ddl.auto">update</property>
 
     <!-- Annotated entity classes -->
-    <mapping class="com.beans.FieldsBean"/>
+    <mapping class="com.Entities.FieldEntity"/>
 
   </session-factory>
 </hibernate-configuration>
