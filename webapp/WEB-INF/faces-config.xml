@@ -12,9 +12,15 @@
             <from-outcome>fields</from-outcome>
             <to-view-id>/views/fields.xhtml</to-view-id>
         </navigation-case>
+
         <navigation-case>
             <from-outcome>add</from-outcome>
             <to-view-id>/views/addField.xhtml</to-view-id>
+        </navigation-case>
+
+        <navigation-case>
+            <from-outcome>responses</from-outcome>
+            <to-view-id>/views/responses.xhtml</to-view-id>
         </navigation-case>
 
     </navigation-rule>

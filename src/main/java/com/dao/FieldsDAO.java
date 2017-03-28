@@ -1,12 +1,15 @@
 package com.dao;
 
 import com.Entities.FieldEntity;
+import com.Entities.ResponseEntity;
 import com.beans.FieldBean;
 import com.utils.HibernateUtil;
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+
+import java.util.List;
 
 
 /**
@@ -40,6 +43,19 @@ public class FieldsDAO {
         session.save(fieldEntity);
         session.getTransaction().commit();
     }
+    public void setResponse(int id, int f_id, int u_id, String value){
+        LOGGER.info("in setField");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        ResponseEntity responseEntity = new ResponseEntity();
+        responseEntity.setId(id);
+        responseEntity.setF_id(f_id);
+        responseEntity.setU_id(u_id);
+        responseEntity.setValue(value);
+        session.save(responseEntity);
+        session.getTransaction().commit();
+    }
+
 
 
     public FieldEntity getField(int id){
@@ -66,6 +82,24 @@ public class FieldsDAO {
             if (session.isOpen()) {
                 session.close();
             }
+        }
+    }
+
+    public List<ResponseEntity> getResponse(int id){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from ResponseEntity");
+        //query.setParameter("id",id);
+        try {
+            List<ResponseEntity> list = query.list();
+            session.getTransaction().commit();
+            return list;
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't get responses",e);
+        } finally {
+            if (session.isOpen()){session.close();}
         }
     }
 }

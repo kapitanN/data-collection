@@ -1,9 +1,13 @@
 import com.Entities.FieldEntity;
+import com.Entities.ResponseEntity;
 import com.beans.FieldBean;
 import com.dao.FieldsDAO;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Iterator;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 
@@ -41,6 +45,12 @@ public class FieldsTest {
     }
 
     @Test
+    public void setResponseTest(){
+        LOGGER.info("set user test");
+        fieldsDAO.setResponse(1,1,1,"nick");
+    }
+
+    @Test
     public void deleteFieldTest(){
         FieldEntity entity = new FieldEntity();
         entity.setId(2);
@@ -49,5 +59,14 @@ public class FieldsTest {
         entity.setRequired(CORRECT_REQUIRED);
         entity.setActive(CORRECT_ACTIVE);
         fieldsDAO.deleteField(entity);
+    }
+
+    @Test
+    public void getResponses(){
+        List list = fieldsDAO.getResponse(6);
+        for (Iterator iterator = list.iterator(); iterator.hasNext();){
+            ResponseEntity response = (ResponseEntity)iterator.next();
+            System.out.println(response.getValue());
+        }
     }
 }

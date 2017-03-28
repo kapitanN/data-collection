@@ -24,6 +24,7 @@
 
     <!-- Annotated entity classes -->
     <mapping class="com.Entities.FieldEntity"/>
+    <mapping class="com.Entities.ResponseEntity"/>
 
   </session-factory>
 </hibernate-configuration>
