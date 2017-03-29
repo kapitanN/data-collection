@@ -5,11 +5,7 @@ import com.dao.FieldsDAO;
 import org.apache.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
-import javax.faces.model.ArrayDataModel;
-import javax.faces.model.DataModel;
 
 /**
  * Created by nikita on 25.03.2017.

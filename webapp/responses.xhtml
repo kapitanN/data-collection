@@ -32,35 +32,13 @@
             <!--</c:forEach>-->
 
 
-            <h:dataTable value = "#{mainBean.fields}" var = "fields1">
-
+            <h:dataTable value = "#{mainBean.fields}" var = "fields">
                 <c:forEach var="i" begin="0" end="#{fn: length(mainBean.fields)-1}" >
                     <h:column>
                         <f:facet name = "header">#{mainBean.fields.get(i).label}</f:facet>
-                        <!--<c:forEach var="j" begin="0" end="#{fn: length(mainBean.labels)-1}">-->
-                            <!--<c:forEach var="j" begin="0" end="#{fn: length(mainBean.responses.get(i))-1}">-->
                             #{mainBean.labels.get(i)}
-                            <!--</c:forEach>-->
-                        <!--</c:forEach>-->
                     </h:column>
                 </c:forEach>
-
-
-                <h:column>
-                    <f:facet name = "header"></f:facet>
-                    #{fields.type}
-                </h:column>
-
-                <h:column>
-                    <f:facet name = "header"></f:facet>
-                    #{fields.required}
-                </h:column>
-
-                <h:column>
-                    <f:facet name = "header"></f:facet>
-                    #{fields.active}
-                </h:column>
-
             </h:dataTable>
         </h:form>
         <h:form>

@@ -68,6 +68,15 @@ public class FieldsDAO {
         return fieldEntity;
     }
 
+    public List<FieldEntity> getAllFields(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from FieldEntity ");
+        List<FieldEntity> allFields = query.list();
+        session.getTransaction().commit();
+        return allFields;
+    }
+
     public void deleteField(FieldEntity field){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -85,11 +94,12 @@ public class FieldsDAO {
         }
     }
 
-    public List<ResponseEntity> getResponse(int id){
+    public List<ResponseEntity> getResponse(int user_id,int field_id){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query query = session.createQuery("from ResponseEntity where user.id = :u_id");
-        query.setParameter("u_id",id);
+        Query query = session.createQuery("from ResponseEntity where user.id = :u_id and field.id = :f_id");
+        query.setParameter("u_id",user_id);
+        query.setParameter("f_id",field_id);
         try {
             List<ResponseEntity> list = query.list();
             session.getTransaction().commit();
@@ -102,4 +112,5 @@ public class FieldsDAO {
             if (session.isOpen()){session.close();}
         }
     }
+
 }

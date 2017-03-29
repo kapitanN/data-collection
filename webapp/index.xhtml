@@ -5,7 +5,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui" >
+      xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
 
 <f:view>
     <h:head>
@@ -13,12 +13,50 @@
     </h:head>
 
     <h:body>
-        <h:panelGrid title="JSF panelGrid Title" border="10" columns="2">
-
-            <h:button value="JSF default button" title="JSF button Title" outcome="fields" action = "#{fieldBean.getField}"/>
-
-        </h:panelGrid>
-
+        <h:button value="Fields" title="Fields" outcome="fields" action = "#{fieldBean.getField}"/><br/>
+        <h:form>
+            <c:forEach items="#{mainBean.fields}" var="fields">
+                <c:choose>
+                    <c:when test="#{fields.required == 'true'}">
+                        <h:outputLabel value="#{fields.label}* :"/>
+                        <br/>
+                    </c:when>
+                    <c:otherwise>
+                        <h:outputLabel value="#{fields.label} :"/>
+                        <br/>
+                    </c:otherwise>
+                </c:choose>
+                <c:choose>
+                    <c:when test="${fields.type=='text'}">
+                        <h:inputText title="#{fields.label}"/><br/>
+                    </c:when>
+                    <c:when test="${fields.type=='radio'}" >
+                        <p:selectOneRadio id="sex" value="#{responseBean.sexs}"  layout="grid" columns="1">
+                            <f:selectItems value="#{responseBean.sexs}" var="c" itemLabel="#{sex}" itemValue="#{sex}"/>
+                        </p:selectOneRadio><br/>
+                    </c:when>
+                    <c:when test="${fields.type=='combobox'}" >
+                        <p:selectOneMenu id="console" value="#{responseBean.option}" style="width:125px">
+                            <f:selectItem itemLabel="Kharkiv" itemValue="" />
+                            <f:selectItem itemLabel="Kiev" itemValue="Kiev" />
+                            <f:selectItem itemLabel="Dnipro" itemValue="Dnipro" />
+                            <f:selectItem itemLabel="Lviv" itemValue="Lviv" />
+                        </p:selectOneMenu><br/>
+                    </c:when>
+                    <c:when test="${fields.type=='checkbox'}" >
+                        <h:selectBooleanCheckbox title="type name" value = "#{fieldBean.active}"/><br/>
+                    </c:when>
+                    <c:when test="${fields.type=='date'}" >
+                        <p:calendar id="date" value="#{responseBean.date}" showOn="button"/><br/>
+                    </c:when>
+                    <c:when test="${fields.type=='textarea'}" >
+                        <p:inputTextarea rows="7" cols="70"/><br/>
+                    </c:when>
+                </c:choose>
+            </c:forEach>
+            <h:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
+            <h:commandButton value="Cancel" type="reset"/>
+        </h:form>
     </h:body>
 </f:view>
 </html>
