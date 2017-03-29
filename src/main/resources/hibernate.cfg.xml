@@ -8,7 +8,7 @@
 
     <!-- Connection settings -->
     <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-    <property name="hibernate.connection.url">jdbc:postgresql://localhost/data_collection</property>
+    <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/data_collection</property>
     <property name="hibernate.connection.username">postgres</property>
     <property name="hibernate.connection.password">pipetka12</property>
     <property name="hibernate.current_session_context_class">thread</property>
@@ -25,6 +25,7 @@
     <!-- Annotated entity classes -->
     <mapping class="com.Entities.FieldEntity"/>
     <mapping class="com.Entities.ResponseEntity"/>
+    <mapping class="com.Entities.UsersEntity"/>
 
   </session-factory>
 </hibernate-configuration>

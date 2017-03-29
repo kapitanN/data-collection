@@ -15,30 +15,10 @@
     <h:body>
         <h:panelGrid title="JSF panelGrid Title" border="10" columns="2">
 
-            <h:outputLabel value="JSF standart label"/>
             <h:button value="JSF default button" title="JSF button Title" outcome="fields" action = "#{fieldBean.getField}"/>
 
         </h:panelGrid>
 
-        <br/>
-
-        <!-- Без формы компоненты работать не будут -->
-        <h:form>
-            <p:panel header="PrimeFaces Components">
-                <p:outputLabel for="inputTextId" value="Введите значение: "/>
-
-                <p:inputText id="inputTextId" title="Binding with ManagedBean"
-                             value="#{mainBean.inputText}">
-                </p:inputText>
-
-                <br/>
-
-                <p:commandButton value="GO to fields" action="fields"/>
-
-            </p:panel>
-        </h:form>
-
     </h:body>
 </f:view>
-
 </html>

@@ -44,11 +44,11 @@ public class FieldsTest {
         fieldsDAO.setField(entity);
     }
 
-    @Test
-    public void setResponseTest(){
-        LOGGER.info("set user test");
-        fieldsDAO.setResponse(1,1,1,"nick");
-    }
+//    @Test
+//    public void setResponseTest(){
+//        LOGGER.info("set user test");
+//        fieldsDAO.setResponse(1,1,1,"nick");
+//    }
 
     @Test
     public void deleteFieldTest(){
@@ -63,7 +63,7 @@ public class FieldsTest {
 
     @Test
     public void getResponses(){
-        List list = fieldsDAO.getResponse(6);
+        List list = fieldsDAO.getResponse(1);
         for (Iterator iterator = list.iterator(); iterator.hasNext();){
             ResponseEntity response = (ResponseEntity)iterator.next();
             System.out.println(response.getValue());

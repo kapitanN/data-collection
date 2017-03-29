@@ -15,11 +15,13 @@ public class ResponseEntity {
     @Column(name = "id", unique = true, nullable = false)
     private Integer id;
 
-    @Column(name = "f_id")
-    private Integer f_id;
+    @ManyToOne
+    @JoinColumn(name = "f_id")
+    private FieldEntity field;
 
-    @Column(name = "u_id")
-    private Integer u_id;
+    @ManyToOne
+    @JoinColumn(name = "u_id")
+    private UsersEntity user;
 
     @Column(name = "value")
     private String value;
@@ -32,20 +34,20 @@ public class ResponseEntity {
         this.id = id;
     }
 
-    public Integer getF_id() {
-        return f_id;
+    public FieldEntity getField() {
+        return field;
     }
 
-    public void setF_id(Integer f_id) {
-        this.f_id = f_id;
+    public void setField(FieldEntity field) {
+        this.field = field;
     }
 
-    public Integer getU_id() {
-        return u_id;
+    public UsersEntity getUser() {
+        return user;
     }
 
-    public void setU_id(Integer u_id) {
-        this.u_id = u_id;
+    public void setUser(UsersEntity user) {
+        this.user = user;
     }
 
     public String getValue() {

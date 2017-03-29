@@ -43,18 +43,18 @@ public class FieldsDAO {
         session.save(fieldEntity);
         session.getTransaction().commit();
     }
-    public void setResponse(int id, int f_id, int u_id, String value){
-        LOGGER.info("in setField");
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        ResponseEntity responseEntity = new ResponseEntity();
-        responseEntity.setId(id);
-        responseEntity.setF_id(f_id);
-        responseEntity.setU_id(u_id);
-        responseEntity.setValue(value);
-        session.save(responseEntity);
-        session.getTransaction().commit();
-    }
+//    public void setResponse(int id, int f_id, int u_id, String value){
+//        LOGGER.info("in setField");
+//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+//        session.beginTransaction();
+//        ResponseEntity responseEntity = new ResponseEntity();
+//        responseEntity.setId(id);
+//        responseEntity.setF_id(f_id);
+//        responseEntity.setU_id(u_id);
+//        responseEntity.setValue(value);
+//        session.save(responseEntity);
+//        session.getTransaction().commit();
+//    }
 
 
 
@@ -88,8 +88,8 @@ public class FieldsDAO {
     public List<ResponseEntity> getResponse(int id){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        Query query = session.createQuery("from ResponseEntity");
-        //query.setParameter("id",id);
+        Query query = session.createQuery("from ResponseEntity where user.id = :u_id");
+        query.setParameter("u_id",id);
         try {
             List<ResponseEntity> list = query.list();
             session.getTransaction().commit();

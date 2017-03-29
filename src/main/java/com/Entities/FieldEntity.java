@@ -28,6 +28,7 @@ public class FieldEntity {
 
     @Column(name = "active")
     private boolean active;
+
     public Integer getId() {
         return id;
     }
