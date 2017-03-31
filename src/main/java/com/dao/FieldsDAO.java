@@ -1,7 +1,6 @@
 package com.dao;
 
-import com.Entities.FieldEntity;
-import com.Entities.ResponseEntity;
+import com.Entities.*;
 import com.beans.FieldBean;
 import com.utils.HibernateUtil;
 import org.apache.log4j.Logger;
@@ -9,6 +8,7 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -43,20 +43,6 @@ public class FieldsDAO {
         session.save(fieldEntity);
         session.getTransaction().commit();
     }
-//    public void setResponse(int id, int f_id, int u_id, String value){
-//        LOGGER.info("in setField");
-//        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-//        session.beginTransaction();
-//        ResponseEntity responseEntity = new ResponseEntity();
-//        responseEntity.setId(id);
-//        responseEntity.setF_id(f_id);
-//        responseEntity.setU_id(u_id);
-//        responseEntity.setValue(value);
-//        session.save(responseEntity);
-//        session.getTransaction().commit();
-//    }
-
-
 
     public FieldEntity getField(int id){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -66,6 +52,24 @@ public class FieldsDAO {
         FieldEntity fieldEntity = (FieldEntity) query.uniqueResult();
         session.getTransaction().commit();
         return fieldEntity;
+    }
+
+    public FieldEntity getFieldByLabel(String label){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from FieldEntity where label = :label");
+        query.setParameter("label",label);
+        try {
+            FieldEntity field = (FieldEntity) query.uniqueResult();
+            session.getTransaction().commit();
+            return field;
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't get field by label",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
     }
 
     public List<FieldEntity> getAllFields(){
@@ -94,12 +98,12 @@ public class FieldsDAO {
         }
     }
 
-    public List<ResponseEntity> getResponse(int user_id,int field_id){
+    public List<ResponseEntity> getResponse(int userId,int fieldId){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("from ResponseEntity where user.id = :u_id and field.id = :f_id");
-        query.setParameter("u_id",user_id);
-        query.setParameter("f_id",field_id);
+        query.setParameter("u_id",userId);
+        query.setParameter("f_id",fieldId);
         try {
             List<ResponseEntity> list = query.list();
             session.getTransaction().commit();
@@ -108,6 +112,67 @@ public class FieldsDAO {
             LOGGER.error(e.toString());
             session.getTransaction().rollback();
             throw new HibernateException("Can't get responses",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
+    }
+
+    public List<TypesEntity> getAllTypes(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from TypesEntity");
+        try {
+            List<TypesEntity> allTypes = query.list();
+            session.getTransaction().commit();
+            return allTypes;
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't get types",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
+    }
+
+    public List<TypesOptionsEntity> getAllTypesOptions(int fieldId){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from TypesOptionsEntity where fId = :f_id");
+        query.setParameter("f_id",fieldId);
+        try {
+            List<TypesOptionsEntity> allTypesOptions = query.list();
+            session.getTransaction().commit();
+            return allTypesOptions;
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't get types options",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
+    }
+
+    public void setTypesOptions(int fieldId, String value){
+        LOGGER.info("in setTypesOptions");
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        TypesOptionsEntity optionsEntity = new TypesOptionsEntity(fieldId,value);
+        session.save(optionsEntity);
+        session.getTransaction().commit();
+    }
+
+    public List<UsersEntity> getUsers(){
+        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from UsersEntity ");
+        try {
+            List<UsersEntity> users = query.list();
+            session.getTransaction().commit();
+            return users;
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't get users",e);
         } finally {
             if (session.isOpen()){session.close();}
         }

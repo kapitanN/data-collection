@@ -7,47 +7,30 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
       xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
-    <h:head><title>Second Page Title</title></h:head>
+    <h:head><title>Fields</title></h:head>
 
     <h:body>
 
         <h:button value="Responses" outcome="responses"/>
         <h:button value="Add Field" outcome="add"/>
-
         <h:form>
-            <h:dataTable value = "#{mainBean.fields}" var = "fields">
-
-                <h:column>
-                    <f:facet name = "header">Label</f:facet>
-                    #{fields.label}
-                </h:column>
-
-                <h:column>
-                    <f:facet name = "header">Type</f:facet>
-                    #{fields.type}
-                </h:column>
-
-                <h:column>
-                    <f:facet name = "header">Required</f:facet>
-                    #{fields.required}
-                </h:column>
-
-                <h:column>
-                    <f:facet name = "header">Is active</f:facet>
-                    #{fields.active}
-                </h:column>
-                <h:column>
-                    <f:facet name = "header"></f:facet>
+        <p:panelGrid columns="6" layout="grid">
+            <h:outputText style="font-weight: bold" value="Label"/>
+            <h:outputText style="font-weight: bold" value="Type"/>
+            <h:outputText style="font-weight: bold" value="Required"/>
+            <h:outputText style="font-weight: bold" value="Is Active"/>
+            <h:outputText value=""/>
+            <h:outputText value=""/>
+            <c:forEach var="i" begin="0" end="#{mainBean.fields.size()-1}">
+                    <h:outputText value="#{mainBean.fields.get(i).label}" />
+                    <h:outputText value="#{mainBean.fields.get(i).type}" />
+                    <h:outputText value="#{mainBean.fields.get(i).required}" />
+                    <h:outputText value="#{mainBean.fields.get(i).active}" />
                     <h:commandLink value="edit"/>
-                </h:column>
-                <h:column>
-                    <f:facet name = "header"></f:facet>
                     <h:commandLink value="delete"/>
-                </h:column>
-
-            </h:dataTable>
+            </c:forEach>
+        </p:panelGrid>
         </h:form>
-
 
     </h:body>
 </f:view>

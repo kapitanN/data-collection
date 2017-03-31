@@ -1,7 +1,8 @@
-import com.Entities.FieldEntity;
-import com.Entities.ResponseEntity;
+import com.Entities.*;
 import com.beans.FieldBean;
+import com.beans.MainBean;
 import com.dao.FieldsDAO;
+import com.service.ResponsesService;
 import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
@@ -54,16 +55,11 @@ public class FieldsTest {
         fieldsDAO.setField(entity);
     }
 
-//    @Test
-//    public void setResponseTest(){
-//        LOGGER.info("set user test");
-//        fieldsDAO.setResponse(1,1,1,"nick");
-//    }
 
     @Test
     public void deleteFieldTest(){
         FieldEntity entity = new FieldEntity();
-        entity.setId(2);
+        entity.setId(1);
         entity.setLabel(CORRECT_LABEL);
         entity.setType(CORRECT_TYPE);
         entity.setRequired(CORRECT_REQUIRED);
@@ -89,6 +85,55 @@ public class FieldsTest {
         for (Iterator iterator = response.iterator(); iterator.hasNext();){
             ResponseEntity item = (ResponseEntity)iterator.next();
             System.out.println(item.getValue());
+        }
+    }
+
+
+    @Test
+    public void getAllTypesTest(){
+        List<TypesEntity> allTypes = fieldsDAO.getAllTypes();
+        for (TypesEntity item : allTypes) {
+            System.out.println(item.getType());
+        }
+    }
+
+    @Test
+    public void getFieldByLabelTest(){
+        FieldEntity field = fieldsDAO.getFieldByLabel("Name");
+        System.out.println(field.getId() + " " + field.getType());
+    }
+
+    @Test
+    public void getAllTypesOptions(){
+        List<TypesOptionsEntity> typesOptions = fieldsDAO.getAllTypesOptions(4);
+        for (TypesOptionsEntity item : typesOptions) {
+            System.out.println(item.getValue());
+        }
+    }
+
+    @Test
+    public void setTypeOptions(){
+        fieldsDAO.setTypesOptions(1, "Male");
+    }
+
+    @Test
+    public void getUsersTest(){
+        List<UsersEntity> users = fieldsDAO.getUsers();
+        for (UsersEntity item : users) {
+            System.out.println(item.getId());
+        }
+    }
+
+    @Test
+    public void getLabelsTest(){
+        ResponsesService responsesService = new ResponsesService();
+        List<List<String>> lists = new ArrayList<List<String>>();
+        int usersCount = fieldsDAO.getUsers().size();
+        for (int i = 0; i<usersCount;i++){
+            lists.add(responsesService.getLabels(i));
+            for (String item : lists.get(i)) {
+                System.out.println(item);
+            }
         }
     }
 }

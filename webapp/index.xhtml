@@ -9,13 +9,14 @@
 
 <f:view>
     <h:head>
-        <title>JSF Title</title>
+        <title>Main</title>
     </h:head>
 
     <h:body>
         <h:button value="Fields" title="Fields" outcome="fields" action = "#{fieldBean.getField}"/><br/>
         <h:form>
             <c:forEach items="#{mainBean.fields}" var="fields">
+                <c:if test="#{fields.active == 'true'}">
                 <c:choose>
                     <c:when test="#{fields.required == 'true'}">
                         <h:outputLabel value="#{fields.label}* :"/>
@@ -27,34 +28,34 @@
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${fields.type=='text'}">
-                        <h:inputText title="#{fields.label}"/><br/>
+                    <c:when test="${fields.type=='Single line text'}">
+                        <h:inputText title="#{fields.label}" value = "#{responseBean.data}"/><br/>
                     </c:when>
-                    <c:when test="${fields.type=='radio'}" >
-                        <p:selectOneRadio id="sex" value="#{responseBean.sexs}"  layout="grid" columns="1">
-                            <f:selectItems value="#{responseBean.sexs}" var="c" itemLabel="#{sex}" itemValue="#{sex}"/>
+                    <c:when test="${fields.type=='Radio button'}" >
+                        <p:selectOneRadio id="radio" value="#{fieldBean.getTypesOption(fields.label)}"  layout="grid" columns="1">
+                            <f:selectItems value="#{fieldBean.getTypesOption(fields.label)}" var="c" itemLabel="#{sex}" itemValue="#{sex}"/>
                         </p:selectOneRadio><br/>
                     </c:when>
-                    <c:when test="${fields.type=='combobox'}" >
-                        <p:selectOneMenu id="console" value="#{responseBean.option}" style="width:125px">
-                            <f:selectItem itemLabel="Kharkiv" itemValue="" />
-                            <f:selectItem itemLabel="Kiev" itemValue="Kiev" />
-                            <f:selectItem itemLabel="Dnipro" itemValue="Dnipro" />
-                            <f:selectItem itemLabel="Lviv" itemValue="Lviv" />
+                    <c:when test="${fields.type=='Combobox'}" >
+                        <p:selectOneMenu id="console" value="#{responseBean.data}" style="width:125px">
+                            <c:forEach items="#{fieldBean.getTypesOption(fields.label)}" var="options">
+                                <f:selectItem itemLabel="#{options}" itemValue="" />
+                            </c:forEach>
                         </p:selectOneMenu><br/>
                     </c:when>
-                    <c:when test="${fields.type=='checkbox'}" >
-                        <h:selectBooleanCheckbox title="type name" value = "#{fieldBean.active}"/><br/>
+                    <c:when test="${fields.type=='Checkbox'}" >
+                        <h:selectBooleanCheckbox title="type name" value = "#{responseBean.data}"/><br/>
                     </c:when>
-                    <c:when test="${fields.type=='date'}" >
-                        <p:calendar id="date" value="#{responseBean.date}" showOn="button"/><br/>
+                    <c:when test="${fields.type=='Date'}" >
+                        <p:calendar id="date" value="#{responseBean.data}" showOn="button"/><br/>
                     </c:when>
-                    <c:when test="${fields.type=='textarea'}" >
+                    <c:when test="${fields.type=='Multi line text'}" >
                         <p:inputTextarea rows="7" cols="70"/><br/>
                     </c:when>
                 </c:choose>
+                </c:if>
             </c:forEach>
-            <h:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
+            <h:commandButton value="Save" type="submit" action="#{responseBean.setAllData}"/>
             <h:commandButton value="Cancel" type="reset"/>
         </h:form>
     </h:body>

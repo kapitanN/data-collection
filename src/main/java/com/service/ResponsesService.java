@@ -12,12 +12,12 @@ import java.util.List;
  */
     public class ResponsesService {
 
-    public List<String> getLabels(){
+    public List<String> getLabels(int user_id){
         FieldsDAO fieldsDAO = new FieldsDAO();
         List<String> labels = new ArrayList<String>();
         List<FieldEntity> fields = fieldsDAO.getAllFields();
         for (int i = 0; i<fields.size(); i++){
-            List<ResponseEntity> response = fieldsDAO.getResponse(1,i+1);
+            List<ResponseEntity> response = fieldsDAO.getResponse(user_id+1,i+1);
             if (response.size() == 0){
                 labels.add(i,"N/A");
             }else {

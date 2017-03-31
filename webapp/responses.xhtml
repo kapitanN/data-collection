@@ -10,41 +10,20 @@
     <h:body>
         <h:outputLabel id="message" />
         <h:form>
-
-            <!--<ui:param name = "max" value = "5"/>-->
-            <!--<ui:repeat var="i" value="#{mainBean.fields}">-->
-                <!--<tr><td style="border-right: 20px">#{i.label}</td></tr>-->
-            <!--</ui:repeat><br/>-->
-
-            <!--<p:dataGrid columns="5" value="#{mainBean.fields}" var="item">-->
-                <!--<p:column>-->
-                    <!--<h:outputText value="#{item.label}" />-->
-                <!--</p:column>-->
-            <!--</p:dataGrid>-->
-
-            <!--<c:forEach items="#{mainBean.fields}" var="field">-->
-                <!--<p:column headerText="#{field.label}">-->
-                    <!--<ui:repeat var="i" value="#{mainBean.labels}">-->
-                        <!--<tr><td>#{i}</td></tr>-->
-                    <!--</ui:repeat>-->
-                    <!--&lt;!&ndash;<h:outputText value="#{mainBean.labels}"></h:outputText>&ndash;&gt;-->
-                <!--</p:column><br/>-->
-            <!--</c:forEach>-->
-
-
-            <h:dataTable value = "#{mainBean.fields}" var = "fields">
-                <c:forEach var="i" begin="0" end="#{fn: length(mainBean.fields)-1}" >
-                    <h:column>
-                        <f:facet name = "header">#{mainBean.fields.get(i).label}</f:facet>
-                            #{mainBean.labels.get(i)}
-                    </h:column>
+            <p:panelGrid columns="#{mainBean.fields.size()}" layout="grid">
+                <c:forEach var="h" begin="0" end="#{mainBean.fields.size()-1}">
+                    <h:outputText style="font-weight: bold" value="#{mainBean.fields.get(h).label}" />
                 </c:forEach>
-            </h:dataTable>
+                <c:forEach var="i" begin="0" end="#{mainBean.responses.size()-1}">
+                    <c:forEach var="j" begin="0" end="#{mainBean.responses.get(i).size()-1}">
+                        <h:outputText value="#{mainBean.responses.get(i).get(j)}" />
+                    </c:forEach>
+                </c:forEach>
+            </p:panelGrid>
         </h:form>
         <h:form>
             <h:inputText type="text" id="userinput" /> <br/>
             <h:commandButton type="submit" value="Send Message" onclick="start()" />
-
         </h:form>
 
     </h:body>

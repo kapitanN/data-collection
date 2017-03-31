@@ -1,11 +1,14 @@
 package com.beans;
 
 import com.Entities.FieldEntity;
+import com.Entities.TypesOptionsEntity;
 import com.dao.FieldsDAO;
 import org.apache.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by nikita on 25.03.2017.
@@ -16,6 +19,7 @@ import javax.faces.bean.SessionScoped;
 public class FieldBean {
     String label;
     String type;
+    String option;
     boolean required;
     boolean active;
 
@@ -29,6 +33,16 @@ public class FieldBean {
         this.active = active;
     }
 
+    public List<String> getTypesOption(String fieldLabel){
+        FieldsDAO fieldsDAO = new FieldsDAO();
+        List<String> optionsList = new ArrayList<String>();
+        int fieldId = fieldsDAO.getFieldByLabel(fieldLabel).getId();
+        List<TypesOptionsEntity> options = fieldsDAO.getAllTypesOptions(fieldId);
+        for (TypesOptionsEntity item : options) {
+            optionsList.add(item.getValue());
+        }
+        return optionsList;
+    }
     public static FieldEntity getField(int id){
         FieldsDAO fieldsDAO = new FieldsDAO();
         FieldEntity fieldEntity = fieldsDAO.getField(id);
@@ -39,6 +53,30 @@ public class FieldBean {
         LOGGER.info("in addField");
         FieldsDAO fieldsDAO = new FieldsDAO();
         fieldsDAO.setField(label,type,required,active);
+        if (option != null){
+            List<String> options = parseOption();
+            int fieldId = fieldsDAO.getFieldByLabel(label).getId();
+            for (String item : options){
+                setTypesOptions(fieldId,item);
+            }
+        }
+    }
+
+    public List<String> parseOption(){
+        String[] strings = option.trim().split("\\n");
+        List<String> parseList = new ArrayList<String>();
+        for (int i = 0; i < strings.length; i++) {
+            parseList.add(i,strings[i]);
+        }
+        for (String item : parseList) {
+            System.out.println(item);
+        }
+        return parseList;
+    }
+
+    public void setTypesOptions(int fieldId, String value){
+        FieldsDAO fieldsDAO = new FieldsDAO();
+        fieldsDAO.setTypesOptions(fieldId,value);
     }
 
     public String getLabel() {
@@ -55,6 +93,14 @@ public class FieldBean {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getOption() {
+        return option;
+    }
+
+    public void setOption(String option) {
+        this.option = option;
     }
 
     public boolean getRequired() {

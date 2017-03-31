@@ -4,16 +4,28 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
 <f:view>
     <h:body>
+        <h:head>
+                <title>Add fields</title>
+        </h:head>
         <h:form>
             <h:outputLabel value="Create/Edit field"/>
             <br/>
             <h:outputLabel value="Label* :"/><br/>
-            <h:inputText title="label name" value = "#{fieldBean.label}"/><br/>
-            <h:outputLabel value="Type* :"/><br/>
-            <h:inputText title="type name" value = "#{fieldBean.type}"/><br/>
+            <h:inputText title="label name" value = "#{fieldBean.label}" required="true"/><br/>
+            <p:outputLabel for = "console" value="Type* :"/><br/>
+            <p:selectOneMenu id="console" value="#{fieldBean.type}" style="width:200px">
+                <f:selectItem itemLabel="Single line text" itemValue="Single line text" />
+                <f:selectItem itemLabel="Multi line text" itemValue="Textareas" />
+                <f:selectItem itemLabel="Radio button" itemValue="Radion button" />
+                <f:selectItem itemLabel="Checkbox" itemValue="Checkbox" />
+                <f:selectItem itemLabel="Combobox" itemValue="Combobox" />
+                <f:selectItem itemLabel="Date" itemValue="Date" />
+            </p:selectOneMenu><br/>
+            <p:inputTextarea rows="7" cols="70" value="#{fieldBean.option}"/><br/>
             <h:outputLabel value="Required* :"/><br/>
             <h:selectBooleanCheckbox title="label name" value = "#{fieldBean.required}"/><br/>
             <h:outputLabel value="Is Active* :"/><br/>
