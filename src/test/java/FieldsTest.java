@@ -49,10 +49,15 @@ public class FieldsTest {
     }
 
     @Test
-    public void setFieldTest(){
+    public void updateFieldTest(){
         LOGGER.info("set user test");
-        FieldBean entity = new FieldBean(CORRECT_LABEL,CORRECT_TYPE,CORRECT_REQUIRED,CORRECT_ACTIVE);
-        fieldsDAO.setField(entity);
+//        FieldEntity entity = new FieldEntity();
+//        entity.setId(15);
+//        entity.setLabel("City");
+//        entity.setType("Combobox");
+//        entity.setRequired(false);
+//        entity.setActive(true);
+        fieldsDAO.updateField(15,"City","Combobox",false,true);
     }
 
 
@@ -60,10 +65,10 @@ public class FieldsTest {
     public void deleteFieldTest(){
         FieldEntity entity = new FieldEntity();
         entity.setId(1);
-        entity.setLabel(CORRECT_LABEL);
-        entity.setType(CORRECT_TYPE);
-        entity.setRequired(CORRECT_REQUIRED);
-        entity.setActive(CORRECT_ACTIVE);
+        entity.setLabel("City");
+        entity.setType("Combobox");
+        entity.setRequired(true);
+        entity.setActive(true);
         fieldsDAO.deleteField(entity);
     }
 

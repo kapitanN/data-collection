@@ -15,6 +15,8 @@ import java.util.List;
 @SessionScoped
 public class MainBean {
 
+
+
     public List<FieldEntity> getFields(){
         FieldsDAO fieldsDAO = new FieldsDAO();
         List<FieldEntity> fields = fieldsDAO.getAllFields();
@@ -26,6 +28,7 @@ public class MainBean {
         List<TypesEntity> types = fieldsDAO.getAllTypes();
         return types;
     }
+
 
 
     public List<List<String>> getResponses(){

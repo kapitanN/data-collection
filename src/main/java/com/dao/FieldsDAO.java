@@ -19,18 +19,19 @@ public class FieldsDAO {
 
     private static final Logger LOGGER = Logger.getLogger(FieldsDAO.class);
 
-    public void setField(FieldBean field){
+    public void updateField(int fieldId,String label, String type, boolean required, boolean active){
         LOGGER.info("in setField");
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
-        FieldEntity fieldEntity = new FieldEntity();
-        fieldEntity.setLabel(field.getLabel());
-        fieldEntity.setType(field.getType());
-        fieldEntity.setRequired(field.getRequired());
-        fieldEntity.setActive(field.getActive());
-        session.save(fieldEntity);
+        FieldEntity field = getField(fieldId);
+        field.setLabel(label);
+        field.setType(type);
+        field.setRequired(required);
+        field.setActive(active);
+        session.update(field);
         session.getTransaction().commit();
     }
+
     public void setField(String label, String type, boolean required, boolean active){
         LOGGER.info("in setField");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
@@ -44,6 +45,9 @@ public class FieldsDAO {
         session.getTransaction().commit();
     }
 
+    public void editField(FieldEntity field){
+
+    }
     public FieldEntity getField(int id){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
@@ -84,7 +88,11 @@ public class FieldsDAO {
     public void deleteField(FieldEntity field){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
+        List<ResponseEntity> responseList = getResponseByFieldId(field.getId());
         try {
+            for (ResponseEntity response : responseList) {
+                session.delete(response);
+            }
             session.delete(field);
             session.getTransaction().commit();
         } catch (HibernateException e) {
@@ -112,6 +120,24 @@ public class FieldsDAO {
             LOGGER.error(e.toString());
             session.getTransaction().rollback();
             throw new HibernateException("Can't get responses",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
+    }
+
+    public List<ResponseEntity> getResponseByFieldId(int fieldId){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from ResponseEntity where field.id = :f_id");
+        query.setParameter("f_id",fieldId);
+        try {
+            List<ResponseEntity> list = query.list();
+            session.getTransaction().commit();
+            return list;
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't get responses by field id",e);
         } finally {
             if (session.isOpen()){session.close();}
         }

@@ -30,7 +30,14 @@
             <h:selectBooleanCheckbox title="label name" value = "#{fieldBean.required}"/><br/>
             <h:outputLabel value="Is Active* :"/><br/>
             <h:selectBooleanCheckbox title="type name" value = "#{fieldBean.active}"/><br/>
-            <h:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
+            <c:choose>
+                <c:when test="#{param['fieldId'] != 0}">
+                    <h:commandButton value="Save" type="submit" action="#{fieldBean.updateField()}"/>
+                </c:when>
+                <c:otherwise>
+                    <h:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
+                </c:otherwise>
+            </c:choose>
             <h:commandButton value="Cancel" type="reset"/>
         </h:form>
     </h:body>

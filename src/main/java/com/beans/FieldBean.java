@@ -6,6 +6,7 @@ import com.dao.FieldsDAO;
 import org.apache.log4j.Logger;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,19 @@ public class FieldBean {
     String option;
     boolean required;
     boolean active;
+    int fieldId;
+
+    public int getFieldId() {
+        return fieldId;
+    }
+
+    public void setFieldId(int fieldId) {
+        this.fieldId = fieldId;
+    }
+
+
+
+
 
     private static final Logger LOGGER = Logger.getLogger(FieldBean.class);
 
@@ -49,7 +63,7 @@ public class FieldBean {
         return fieldEntity;
     }
 
-    public void addField(){
+    public String addField(){
         LOGGER.info("in addField");
         FieldsDAO fieldsDAO = new FieldsDAO();
         fieldsDAO.setField(label,type,required,active);
@@ -60,6 +74,27 @@ public class FieldBean {
                 setTypesOptions(fieldId,item);
             }
         }
+        return "fields?faces-redirect=true";
+    }
+
+    public String showAddField(int fieldId) {
+        this.fieldId = fieldId;
+        System.out.println(fieldId);
+        return "addField?faces-redirect=true&fieldId=" + fieldId;
+    }
+
+    public String updateField(){
+        LOGGER.info("in updateField" + fieldId);
+        FieldsDAO fieldsDAO = new FieldsDAO();
+        fieldsDAO.updateField(fieldId,label,type,required,active);
+        if (option != null){
+            List<String> options = parseOption();
+            int fieldId = fieldsDAO.getFieldByLabel(label).getId();
+            for (String item : options){
+                setTypesOptions(fieldId,item);
+            }
+        }
+        return "fields?faces-redirect=true";
     }
 
     public List<String> parseOption(){

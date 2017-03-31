@@ -26,8 +26,8 @@
                     <h:outputText value="#{mainBean.fields.get(i).type}" />
                     <h:outputText value="#{mainBean.fields.get(i).required}" />
                     <h:outputText value="#{mainBean.fields.get(i).active}" />
-                    <h:commandLink value="edit"/>
-                    <h:commandLink value="delete"/>
+                    <h:commandLink value="edit" action="#{fieldBean.showAddField(mainBean.fields.get(i).id)}"/>
+                    <h:commandLink value="delete" action="#{mainBean.deleteField(mainBean.fields.get(i))}"/>
             </c:forEach>
         </p:panelGrid>
         </h:form>
