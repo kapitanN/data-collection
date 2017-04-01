@@ -20,7 +20,7 @@
             <p:selectOneMenu id="console" value="#{fieldBean.type}" style="width:200px">
                 <f:selectItem itemLabel="Single line text" itemValue="Single line text" />
                 <f:selectItem itemLabel="Multi line text" itemValue="Textareas" />
-                <f:selectItem itemLabel="Radio button" itemValue="Radion button" />
+                <f:selectItem itemLabel="Radio button" itemValue="Radio button" />
                 <f:selectItem itemLabel="Checkbox" itemValue="Checkbox" />
                 <f:selectItem itemLabel="Combobox" itemValue="Combobox" />
                 <f:selectItem itemLabel="Date" itemValue="Date" />
@@ -30,14 +30,9 @@
             <h:selectBooleanCheckbox title="label name" value = "#{fieldBean.required}"/><br/>
             <h:outputLabel value="Is Active* :"/><br/>
             <h:selectBooleanCheckbox title="type name" value = "#{fieldBean.active}"/><br/>
-            <c:choose>
-                <c:when test="#{param['fieldId'] != 0}">
-                    <h:commandButton value="Save" type="submit" action="#{fieldBean.updateField()}"/>
-                </c:when>
-                <c:otherwise>
+
                     <h:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
-                </c:otherwise>
-            </c:choose>
+
             <h:commandButton value="Cancel" type="reset"/>
         </h:form>
     </h:body>

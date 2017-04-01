@@ -10,9 +10,12 @@
     <h:head><title>Fields</title></h:head>
 
     <h:body>
+        <h:button value="Fields" title="Fields" outcome="fields" action = "#{fieldBean.getField}"/><br/>
+        <h:form>
+            <h:button value="Responses" outcome="responses"/>
+            <h:commandButton value="Add Field" action="#{fieldBean.showAddField(0)}"/>
+        </h:form>
 
-        <h:button value="Responses" outcome="responses"/>
-        <h:button value="Add Field" outcome="add"/>
         <h:form>
         <p:panelGrid columns="6" layout="grid">
             <h:outputText style="font-weight: bold" value="Label"/>

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +25,21 @@ public class FieldBean {
     boolean required;
     boolean active;
     int fieldId;
+    String value;
+    List<String> values;
+
+    public String getValues() {
+        return value;
+    }
+
+    public void setValues(String value) {
+        this.value = value;
+    }
+
+    public void add(){
+        values.add(value);
+        value = null;
+    }
 
     public int getFieldId() {
         return fieldId;
@@ -32,10 +48,6 @@ public class FieldBean {
     public void setFieldId(int fieldId) {
         this.fieldId = fieldId;
     }
-
-
-
-
 
     private static final Logger LOGGER = Logger.getLogger(FieldBean.class);
 
@@ -64,17 +76,22 @@ public class FieldBean {
     }
 
     public String addField(){
-        LOGGER.info("in addField");
-        FieldsDAO fieldsDAO = new FieldsDAO();
-        fieldsDAO.setField(label,type,required,active);
-        if (option != null){
-            List<String> options = parseOption();
-            int fieldId = fieldsDAO.getFieldByLabel(label).getId();
-            for (String item : options){
-                setTypesOptions(fieldId,item);
-            }
+        LOGGER.info("in addField" + fieldId);
+        if (fieldId != 0){
+            return updateField();
         }
-        return "fields?faces-redirect=true";
+        else {
+            FieldsDAO fieldsDAO = new FieldsDAO();
+            fieldsDAO.setField(label,type,required,active);
+            if (option != null){
+                List<String> options = parseOption();
+                int fieldId = fieldsDAO.getFieldByLabel(label).getId();
+                for (String item : options){
+                    setTypesOptions(fieldId,item);
+                }
+            }
+            return "fields?faces-redirect=true";
+        }
     }
 
     public String showAddField(int fieldId) {
@@ -87,13 +104,6 @@ public class FieldBean {
         LOGGER.info("in updateField" + fieldId);
         FieldsDAO fieldsDAO = new FieldsDAO();
         fieldsDAO.updateField(fieldId,label,type,required,active);
-        if (option != null){
-            List<String> options = parseOption();
-            int fieldId = fieldsDAO.getFieldByLabel(label).getId();
-            for (String item : options){
-                setTypesOptions(fieldId,item);
-            }
-        }
         return "fields?faces-redirect=true";
     }
 

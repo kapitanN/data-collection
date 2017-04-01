@@ -5,7 +5,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+      xmlns:p="http://primefaces.org/ui" xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+      xmlns:jsf="http://java.sun.com/jsf/core">
 
 <f:view>
     <h:head>
@@ -13,7 +14,6 @@
     </h:head>
 
     <h:body>
-        <h:button value="Fields" title="Fields" outcome="fields" action = "#{fieldBean.getField}"/><br/>
         <h:form>
             <c:forEach items="#{mainBean.fields}" var="fields">
                 <c:if test="#{fields.active == 'true'}">
@@ -55,9 +55,27 @@
                 </c:choose>
                 </c:if>
             </c:forEach>
-            <h:commandButton value="Save" type="submit" action="#{responseBean.setAllData}"/>
+            <h:commandButton value="Save" type="submit" action="#{mainBean.setAllValues}"/>
             <h:commandButton value="Cancel" type="reset"/>
         </h:form>
+        <h:form>
+            <c:forEach items="#{mainBean.fields}" var="fields">
+                <p:outputLabel value="#{fields.label}"/>
+                <p:inputText >
+                    <f:passThroughAttributes value="#{fields.label}"/>
+                </p:inputText>
+            </c:forEach>
+            <h:inputText jsfc="name" id="Name" title="1">
+
+            </h:inputText>
+            <br/>
+            <h:inputText name = "Last name" title="2"/><br/>
+            <h:commandButton value="Save" type="submit" action="#{mainBean.add}">
+                <f:attribute name="Name" value=""/>
+            </h:commandButton>
+
+        </h:form>
+
     </h:body>
 </f:view>
 </html>

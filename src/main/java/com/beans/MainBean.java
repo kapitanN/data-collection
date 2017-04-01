@@ -8,7 +8,10 @@ import com.service.ResponsesService;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.List;
 
 @ManagedBean(name = "mainBean")
@@ -45,5 +48,24 @@ public class MainBean {
     public void deleteField(FieldEntity field){
         FieldsDAO fieldsDAO = new FieldsDAO();
         fieldsDAO.deleteField(field);
+    }
+
+    public void setAllValues(){
+        System.out.println("To out-put All the request-attributes received from request - ");
+
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        Enumeration enAttr = request.getAttributeNames();
+        while(enAttr.hasMoreElements()){
+            String attributeName = (String)enAttr.nextElement();
+            System.out.println("Attribute Name - "+attributeName+", Value - "+(request.getAttribute(attributeName)).toString());
+        }
+
+        System.out.println("To out-put All the request parameters received from request - ");
+
+        Enumeration enParams = request.getParameterNames();
+        while(enParams.hasMoreElements()){
+            String paramName = (String)enParams.nextElement();
+            System.out.println("Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
+        }
     }
 }
