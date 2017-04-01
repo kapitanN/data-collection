@@ -28,17 +28,29 @@ public class FieldBean {
     String value;
     List<String> values;
 
-    public String getValues() {
-        return value;
+    public List<String> getValues() {
+        return values;
     }
 
-    public void setValues(String value) {
-        this.value = value;
+    public void setValues(List<String> values) {
+        this.values = values;
     }
 
-    public void add(){
-        values.add(value);
-        value = null;
+    {
+        values = new ArrayList<String>();
+        for(int i = 0; i<5; i++)
+            values.add("");
+    }
+    public void add(List<FieldEntity> fields){
+//        LOGGER.info("add values" + value);
+//        values.add(value);
+        for (FieldEntity item : fields) {
+            System.out.println(item.getLabel());
+        }
+        for (String item : values) {
+            System.out.println(item);
+        }
+
     }
 
     public int getFieldId() {

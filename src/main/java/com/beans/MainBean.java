@@ -7,6 +7,7 @@ import com.dao.FieldsDAO;
 import com.service.ResponsesService;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -17,8 +18,15 @@ import java.util.List;
 @ManagedBean(name = "mainBean")
 @SessionScoped
 public class MainBean {
+    public String test;
 
+    public String getTest() {
+        return test;
+    }
 
+    public void setTest(String test) {
+        this.test = test;
+    }
 
     public List<FieldEntity> getFields(){
         FieldsDAO fieldsDAO = new FieldsDAO();
@@ -67,5 +75,6 @@ public class MainBean {
             String paramName = (String)enParams.nextElement();
             System.out.println("Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
         }
+        System.out.println("TEST: " + test);
     }
 }
