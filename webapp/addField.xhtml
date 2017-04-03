@@ -17,7 +17,12 @@
             <h:outputLabel value="Label* :"/><br/>
             <h:inputText title="label name" value = "#{fieldBean.label}" required="true"/><br/>
             <p:outputLabel for = "console" value="Type* :"/><br/>
-            <p:selectOneMenu id="console" value="#{fieldBean.type}" style="width:200px">
+            <p:selectOneMenu id="console" value="#{fieldBean.type}" style="width:200px" onchange="
+                var text = document.getElementById('j_idt5:text');
+            if((this.value == 'Radio button')||(this.value == 'Combobox')){
+                text.style.display = 'block';
+                }
+            else text.style.display = 'none'; ">
                 <f:selectItem itemLabel="Single line text" itemValue="Single line text" />
                 <f:selectItem itemLabel="Multi line text" itemValue="Textareas" />
                 <f:selectItem itemLabel="Radio button" itemValue="Radio button" />
@@ -25,7 +30,7 @@
                 <f:selectItem itemLabel="Combobox" itemValue="Combobox" />
                 <f:selectItem itemLabel="Date" itemValue="Date" />
             </p:selectOneMenu><br/>
-            <p:inputTextarea rows="7" cols="70" value="#{fieldBean.option}"/><br/>
+            <p:inputTextarea id="text" rows="7" cols="70" value="#{fieldBean.option}" style="display: none"/><br/>
             <h:outputLabel value="Required* :"/><br/>
             <h:selectBooleanCheckbox title="label name" value = "#{fieldBean.required}"/><br/>
             <h:outputLabel value="Is Active* :"/><br/>

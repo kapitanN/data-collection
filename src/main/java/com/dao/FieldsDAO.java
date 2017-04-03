@@ -10,6 +10,7 @@ import org.hibernate.query.Query;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -199,6 +200,49 @@ public class FieldsDAO {
             LOGGER.error(e.toString());
             session.getTransaction().rollback();
             throw new HibernateException("Can't get users",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
+    }
+
+    public UsersEntity getMaxUser(){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query2 = session.createQuery("from  UsersEntity");
+        int maxUser = query2.list().size();
+        UsersEntity usersEntity = new UsersEntity(maxUser+1);
+        return usersEntity;
+    }
+
+    public void setUserData(Map<String,String> userData){
+        Session session = HibernateUtil.getSessionFactory().openSession();
+        session.beginTransaction();
+        Query query = session.createQuery("from FieldEntity ");
+        Query query1 = session.createQuery("from FieldEntity where label = :label");
+        UsersEntity usersEntity = getMaxUser();
+        try {
+            List<FieldEntity> fields = query.list();
+            for (Map.Entry item : userData.entrySet()) {
+                query1.setParameter("label",item.getKey());
+                FieldEntity entity = (FieldEntity) query1.uniqueResult();
+                ResponseEntity user = new ResponseEntity();
+                user.setId(12);
+                user.setField(entity);
+                user.setUser(usersEntity);
+                user.setValue(item.getValue().toString());
+                System.out.println(user.getId() + " " +
+                        user.getField().getId() + "" + user.getUser().getId() + "" + user.getValue());
+                session.save(usersEntity);
+                session.save(user);
+                if (!session.getTransaction().isActive()){
+                    session.getTransaction().commit();
+                }
+            }
+
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't set users data",e);
         } finally {
             if (session.isOpen()){session.close();}
         }

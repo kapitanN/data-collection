@@ -18,6 +18,7 @@ public class Websocket {
     @OnClose
     public void eventClose(){
         System.out.println("Соединение закрыто");
+
     }
 
     @OnMessage

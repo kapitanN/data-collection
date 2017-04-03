@@ -26,6 +26,15 @@ public class ResponseEntity {
     @Column(name = "value")
     private String value;
 
+    public ResponseEntity() {
+    }
+
+    public ResponseEntity(FieldEntity field, UsersEntity user, String value) {
+        this.field = field;
+        this.user = user;
+        this.value = value;
+    }
+
     public Integer getId() {
         return id;
     }

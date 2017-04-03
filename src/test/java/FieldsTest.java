@@ -7,9 +7,7 @@ import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -140,5 +138,13 @@ public class FieldsTest {
                 System.out.println(item);
             }
         }
+    }
+
+    @Test
+    public void setUserData(){
+        Map<String,String> userMap = new HashMap<String, String>();
+        userMap.put("Sample combobox", "Male");
+        userMap.put("Full name", "Nikita Shapovalov");
+        fieldsDAO.setUserData(userMap);
     }
 }

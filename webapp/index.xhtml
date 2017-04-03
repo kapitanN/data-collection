@@ -11,51 +11,59 @@
 <f:view>
     <h:head>
         <title>Main</title>
+        <h:outputStylesheet>h1{text-align: center; padding-top: 150px}</h:outputStylesheet>
     </h:head>
 
     <h:body>
         <h:form>
-            <c:forEach items="#{mainBean.fields}" var="fields">
-                <c:if test="#{fields.active == 'true'}">
+            <c:forEach var="i" begin="0" end="#{mainBean.fields.size()-1}">
+                <s:set var="fields" value="#{mainBean.fields}"/>
+                <c:if test="#{mainBean.fields.get(i).active == 'true'}">
                 <c:choose>
-                    <c:when test="#{fields.required == 'true'}">
-                        <h:outputLabel value="#{fields.label}* :"/>
+                    <c:when test="#{mainBean.fields.get(i).required == 'true'}">
+                        <h:outputLabel value="#{mainBean.fields.get(i).label}* :"/>
                         <br/>
                     </c:when>
                     <c:otherwise>
-                        <h:outputLabel value="#{fields.label} :"/>
+                        <h:outputLabel value="#{mainBean.fields.get(i).label} :"/>
                         <br/>
                     </c:otherwise>
                 </c:choose>
                 <c:choose>
-                    <c:when test="${fields.type=='Single line text'}">
-                        <h:inputText title="#{fields.label}" value = "#{responseBean.data}"/><br/>
+                    <c:when test="${mainBean.fields.get(i).type=='Single line text'}">
+                        <h:inputText title="#{mainBean.fields.get(i).label}" value ="#{fieldBean.values[i]}"/><br/>
                     </c:when>
-                    <c:when test="${fields.type=='Radio button'}" >
-                        <p:selectOneRadio id="radio" value="#{fieldBean.getTypesOption(fields.label)}"  layout="grid" columns="1">
-                            <f:selectItems value="#{fieldBean.getTypesOption(fields.label)}" var="c" itemLabel="#{sex}" itemValue="#{sex}"/>
-                        </p:selectOneRadio><br/>
+                    <!--<c:when test="${mainBean.fields.get(i).type=='Radio button'}" >-->
+                        <!--<p:selectOneRadio id="radio" value="#{fieldBean.values[i]}"  layout="grid" columns="1">-->
+                            <!--<c:forEach var="j" begin="0" end="#{fieldBean.getTypesOption(mainBean.fields.get(i).label).size()-1}">-->
+                                <!--<f:selectItem itemLabel="#{fieldBean.getTypesOption(mainBean.fields.get(i).label).get(j)}" itemValue="#{fieldBean.getTypesOption(mainBean.fields.get(i).label).get(j)}" />-->
+                            <!--</c:forEach>-->
+                            <!--&lt;!&ndash;<f:selectItem itemLabel="Red" itemValue="Color-red" />&ndash;&gt;-->
+                            <!--&lt;!&ndash;<f:selectItem itemLabel="Green" itemValue="Color-green" />&ndash;&gt;-->
+                            <!--&lt;!&ndash;<f:selectItem itemLabel="Blue" itemValue="Color-blue" />&ndash;&gt;-->
+                        <!--</p:selectOneRadio><br/>-->
+                    <!--</c:when>-->
+                    <!--<c:when test="${mainBean.fields.get(i).type=='Combobox'}" >-->
+                        <!--<p:selectOneMenu id="console" value="#{fieldBean.value}" style="width:125px">-->
+                            <!--<c:forEach items="#{fieldBean.getTypesOption(mainBean.fields.get(i).label)}" var="options">-->
+                                <!--<f:selectItem itemLabel="#{options}" itemValue="#{fieldBean.values[i]}" />-->
+                            <!--</c:forEach>-->
+                        <!--</p:selectOneMenu><br/>-->
+                    <!--</c:when>-->
+                    <c:when test="${mainBean.fields.get(i).type=='Checkbox'}" >
+                        <h:selectBooleanCheckbox title="type name" value = "#{fieldBean.values[i]}"/><br/>
                     </c:when>
-                    <c:when test="${fields.type=='Combobox'}" >
-                        <p:selectOneMenu id="console" value="#{responseBean.data}" style="width:125px">
-                            <c:forEach items="#{fieldBean.getTypesOption(fields.label)}" var="options">
-                                <f:selectItem itemLabel="#{options}" itemValue="" />
-                            </c:forEach>
-                        </p:selectOneMenu><br/>
-                    </c:when>
-                    <c:when test="${fields.type=='Checkbox'}" >
-                        <h:selectBooleanCheckbox title="type name" value = "#{responseBean.data}"/><br/>
-                    </c:when>
-                    <c:when test="${fields.type=='Date'}" >
-                        <p:calendar id="date" value="#{responseBean.data}" showOn="button"/><br/>
-                    </c:when>
-                    <c:when test="${fields.type=='Multi line text'}" >
-                        <p:inputTextarea rows="7" cols="70"/><br/>
+                    <!--<c:when test="${mainBean.fields.get(i).type=='Date'}" >-->
+                        <!--<p:calendar id="date" value="#{fieldBean.usersDate}" showOn="button"/><br/>-->
+                        <!--&lt;!&ndash;<p:inputText type="hidden" value="#{fieldBean.setUsersDate(i)}"/>&ndash;&gt;-->
+                    <!--</c:when>-->
+                    <c:when test="${mainBean.fields.get(i).type=='Multi line text'}" >
+                        <p:inputTextarea rows="7" cols="70" value="#{fieldBean.values[i]}"/><br/>
                     </c:when>
                 </c:choose>
                 </c:if>
             </c:forEach>
-            <h:commandButton value="Save" type="submit" action="#{mainBean.setAllValues}"/>
+            <h:commandButton value="Save" type="submit" onclick="start()" action="#{fieldBean.add(fields)}"/>
             <h:commandButton value="Cancel" type="reset"/>
         </h:form>
         <h:form>
@@ -67,9 +75,52 @@
             <h:commandButton value="Save" type="submit" action="#{fieldBean.add(fields)}">
                 <f:attribute name="Name" value=""/>
             </h:commandButton>
-
         </h:form>
-
     </h:body>
 </f:view>
+<script type="text/javascript">
+    var webSocket = new WebSocket('ws://localhost:8080/websocket');
+
+    webSocket.onerror = function(event) {
+        onError(event)
+    };
+
+    webSocket.onopen = function(event) {
+        onOpen(event)
+    };
+
+    webSocket.onmessage = function(event) {
+        onMessage(event)
+    };
+    
+    webSocket.onclose  = function (event) {
+        onClose(event);
+    };
+
+    function onMessage(event) {
+        //alert(event.data);
+        setTimeout(console.log("Yep"), 40000);
+        document.getElementsByTagName('body')[0].innerHTML = "<h1>Thank you for submitting you data!</h1>";
+    }
+
+    function onClose(event) {
+        setTimeout(console.log("Yep"),100000);
+    }
+
+    function onOpen(event) {
+        //document.getElementById('message').innerHTML = 'Now Connection established';
+    }
+
+    function onError(event) {
+        alert(event.data);
+
+    }
+
+    function start() {
+        //var text = document.getElementById("userinput").value;
+
+        webSocket.send("Add");
+        return false;
+    }
+</script>
 </html>

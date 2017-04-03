@@ -13,6 +13,13 @@ import javax.persistence.Table;
 public class UsersEntity {
     private int id;
 
+    public UsersEntity() {
+    }
+
+    public UsersEntity(int id) {
+        this.id = id;
+    }
+
     @Id
     @Column(name = "id", nullable = false)
     public int getId() {

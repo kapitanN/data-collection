@@ -9,15 +9,14 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by nikita on 25.03.2017.
  */
 
 @ManagedBean(name = "fieldBean")
-@SessionScoped
+@RequestScoped
 public class FieldBean {
     String label;
     String type;
@@ -27,6 +26,24 @@ public class FieldBean {
     int fieldId;
     String value;
     List<String> values;
+    Map<String,String> userData;
+
+    public Date getUsersDate() {
+        return usersDate;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+    public void setUsersDate(Date usersDate) {
+        this.usersDate = usersDate;
+    }
+
+    public Date usersDate;
 
     public List<String> getValues() {
         return values;
@@ -38,18 +55,32 @@ public class FieldBean {
 
     {
         values = new ArrayList<String>();
-        for(int i = 0; i<5; i++)
+        for(int i = 0; i<10; i++)
             values.add("");
     }
+
+//    public void setUsersDate(int i){
+//        String date = usersDate.toString();
+//        values.add(i,usersDate);
+//        System.out.println("DATE: " + date);
+//    }
     public void add(List<FieldEntity> fields){
 //        LOGGER.info("add values" + value);
 //        values.add(value);
+        userData = new HashMap<String, String>();
+        for (int i = 0; i<fields.size(); i++){
+            userData.put(fields.get(i).getLabel(),values.get(i));
+        }
+        for (Map.Entry entry:userData.entrySet()){
+            System.out.println("Key: " + entry.getKey() + " Value: "+ entry.getValue());
+        }
         for (FieldEntity item : fields) {
             System.out.println(item.getLabel());
         }
-        for (String item : values) {
+        for (Object item : values) {
             System.out.println(item);
         }
+        System.out.println(value);
 
     }
 
