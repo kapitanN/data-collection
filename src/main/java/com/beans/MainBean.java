@@ -15,15 +15,6 @@ import java.util.List;
 @ManagedBean(name = "mainBean")
 @SessionScoped
 public class MainBean {
-    public String test;
-
-    public String getTest() {
-        return test;
-    }
-
-    public void setTest(String test) {
-        this.test = test;
-    }
 
     public List<FieldEntity> getFields(){
         FieldsDAO fieldsDAO = new FieldsDAO();
@@ -47,23 +38,23 @@ public class MainBean {
         fieldsDAO.deleteField(field);
     }
 
-    public void setAllValues(){
-        System.out.println("To out-put All the request-attributes received from request - ");
-
-        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        Enumeration enAttr = request.getAttributeNames();
-        while(enAttr.hasMoreElements()){
-            String attributeName = (String)enAttr.nextElement();
-            System.out.println("Attribute Name - "+attributeName+", Value - "+(request.getAttribute(attributeName)).toString());
-        }
-
-        System.out.println("To out-put All the request parameters received from request - ");
-
-        Enumeration enParams = request.getParameterNames();
-        while(enParams.hasMoreElements()){
-            String paramName = (String)enParams.nextElement();
-            System.out.println("Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
-        }
-        System.out.println("TEST: " + test);
-    }
+//    public void setAllValues(){
+//        System.out.println("To out-put All the request-attributes received from request - ");
+//
+//        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+//        Enumeration enAttr = request.getAttributeNames();
+//        while(enAttr.hasMoreElements()){
+//            String attributeName = (String)enAttr.nextElement();
+//            System.out.println("Attribute Name - "+attributeName+", Value - "+(request.getAttribute(attributeName)).toString());
+//        }
+//
+//        System.out.println("To out-put All the request parameters received from request - ");
+//
+//        Enumeration enParams = request.getParameterNames();
+//        while(enParams.hasMoreElements()){
+//            String paramName = (String)enParams.nextElement();
+//            System.out.println("Attribute Name - "+paramName+", Value - "+request.getParameter(paramName));
+//        }
+//        System.out.println("TEST: " + test);
+//    }
 }

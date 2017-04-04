@@ -5,10 +5,12 @@ import com.Entities.TypesOptionsEntity;
 import com.dao.FieldsDAO;
 import org.apache.log4j.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import java.util.*;
 
 /**
@@ -24,37 +26,16 @@ public class FieldBean {
     boolean required;
     boolean active;
     int fieldId;
-    String value;
     List<String> values;
     Map<String,String> userData;
-    public List<Date> usersDate;
-    public Date date;
 
-    public Date getDate() {
-        return date;
+    public FieldBean(){}
+    public FieldBean(String label, String type, boolean required, boolean active) {
+        this.label = label;
+        this.type = type;
+        this.required = required;
+        this.active = active;
     }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public List<Date> getUsersDate() {
-        return usersDate;
-    }
-    public void setUsersDate(List usersDate) {
-        this.usersDate = usersDate;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-
-
 
     public List<String> getValues() {
         return values;
@@ -66,33 +47,17 @@ public class FieldBean {
 
     {
         values = new ArrayList<String>();
-        usersDate = new ArrayList<Date>();
-        for(int i = 0; i<10; i++)
+        for(int i = 0; i<100; i++)
             values.add("");
-            usersDate.add(new Date());
     }
 
     public void add(List<FieldEntity> fields){
-
         FieldsDAO fieldsDAO = new FieldsDAO();
         userData = new HashMap<String, String>();
         for (int i = 0; i<fields.size(); i++){
             userData.put(fields.get(i).getLabel(),values.get(i));
         }
         fieldsDAO.setUserData(userData);
-
-        for (Map.Entry entry:userData.entrySet()){
-            System.out.println("Key: " + entry.getKey() + " Value: "+ entry.getValue());
-        }
-        for (FieldEntity item : fields) {
-            System.out.println(item.getLabel());
-        }
-        for (Object item : values) {
-            System.out.println(item);
-        }
-        System.out.println("combobox: " + value);
-        System.out.println("date: " + usersDate);
-
     }
 
     public int getFieldId() {
@@ -105,14 +70,6 @@ public class FieldBean {
 
     private static final Logger LOGGER = Logger.getLogger(FieldBean.class);
 
-    public FieldBean(){}
-    public FieldBean(String label, String type, boolean required, boolean active) {
-        this.label = label;
-        this.type = type;
-        this.required = required;
-        this.active = active;
-    }
-
     public List<String> getTypesOption(String fieldLabel){
         FieldsDAO fieldsDAO = new FieldsDAO();
         List<String> optionsList = new ArrayList<String>();
@@ -122,11 +79,6 @@ public class FieldBean {
             optionsList.add(item.getValue());
         }
         return optionsList;
-    }
-    public static FieldEntity getField(int id){
-        FieldsDAO fieldsDAO = new FieldsDAO();
-        FieldEntity fieldEntity = fieldsDAO.getField(id);
-        return fieldEntity;
     }
 
     public String addField(){

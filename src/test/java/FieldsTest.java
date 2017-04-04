@@ -49,12 +49,6 @@ public class FieldsTest {
     @Test
     public void updateFieldTest(){
         LOGGER.info("set user test");
-//        FieldEntity entity = new FieldEntity();
-//        entity.setId(15);
-//        entity.setLabel("City");
-//        entity.setType("Combobox");
-//        entity.setRequired(false);
-//        entity.setActive(true);
         fieldsDAO.updateField(15,"City","Combobox",false,true);
     }
 
@@ -106,10 +100,6 @@ public class FieldsTest {
         }
     }
 
-    @Test
-    public void setTypeOptions(){
-        fieldsDAO.setTypesOptions(1, "Male");
-    }
 
     @Test
     public void getUsersTest(){

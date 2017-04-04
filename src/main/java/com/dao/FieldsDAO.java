@@ -29,8 +29,17 @@ public class FieldsDAO {
         field.setType(type);
         field.setRequired(required);
         field.setActive(active);
-        session.update(field);
-        session.getTransaction().commit();
+        try {
+            session.update(field);
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't update field",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
+
     }
 
     public void setField(String label, String type, boolean required, boolean active){
@@ -42,21 +51,35 @@ public class FieldsDAO {
         fieldEntity.setType(type);
         fieldEntity.setRequired(required);
         fieldEntity.setActive(active);
-        session.save(fieldEntity);
-        session.getTransaction().commit();
+        try {
+            session.save(fieldEntity);
+            session.getTransaction().commit();
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't set field",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
+
     }
 
-    public void editField(FieldEntity field){
-
-    }
     public FieldEntity getField(int id){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         Query query = session.createQuery("from FieldEntity where id = :id");
         query.setParameter("id",id);
-        FieldEntity fieldEntity = (FieldEntity) query.uniqueResult();
-        session.getTransaction().commit();
-        return fieldEntity;
+        try {
+            FieldEntity fieldEntity = (FieldEntity) query.uniqueResult();
+            session.getTransaction().commit();
+            return fieldEntity;
+        } catch (HibernateException e){
+            LOGGER.error(e.toString());
+            session.getTransaction().rollback();
+            throw new HibernateException("Can't get field",e);
+        } finally {
+            if (session.isOpen()){session.close();}
+        }
     }
 
     public FieldEntity getFieldByLabel(String label){
@@ -89,11 +112,16 @@ public class FieldsDAO {
     public void deleteField(FieldEntity field){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
+        int id = field.getId();
         List<ResponseEntity> responseList = getResponseByFieldId(field.getId());
+       // List<TypesOptionsEntity> optionsEntities = getAllTypesOptions(id);
         try {
             for (ResponseEntity response : responseList) {
                 session.delete(response);
             }
+//            for (TypesOptionsEntity optionsEntity : optionsEntities) {
+//                session.delete(optionsEntity);
+//            }
             session.delete(field);
             session.getTransaction().commit();
         } catch (HibernateException e) {
@@ -146,7 +174,7 @@ public class FieldsDAO {
 
 
     public List<TypesOptionsEntity> getAllTypesOptions(int fieldId){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+        Session session = HibernateUtil.getSessionFactory().openSession();
         session.beginTransaction();
         Query query = session.createQuery("from TypesOptionsEntity where fId = :f_id");
         query.setParameter("f_id",fieldId);
@@ -163,11 +191,11 @@ public class FieldsDAO {
         }
     }
 
-    public void setTypesOptions(int fieldId, String value){
+    public void setTypesOptions(int field, String value){
         LOGGER.info("in setTypesOptions");
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
-        TypesOptionsEntity optionsEntity = new TypesOptionsEntity(fieldId,value);
+        TypesOptionsEntity optionsEntity = new TypesOptionsEntity(field,value);
         session.save(optionsEntity);
         session.getTransaction().commit();
     }

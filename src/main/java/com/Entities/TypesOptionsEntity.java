@@ -1,6 +1,11 @@
 package com.Entities;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 /**
  * Created by nikita on 30.03.2017.
@@ -63,13 +68,5 @@ public class TypesOptionsEntity {
         if (value != null ? !value.equals(that.value) : that.value != null) return false;
 
         return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + fId;
-        result = 31 * result + (value != null ? value.hashCode() : 0);
-        return result;
     }
 }

@@ -10,6 +10,9 @@
     <h:head><title>Responses</title></h:head>
     <h:body>
         <h:form>
+            <p:button value="Fields" outcome="fields"/>
+        </h:form><br/>
+        <h:form>
             <p:panelGrid columns="#{mainBean.fields.size()}" layout="grid">
                 <c:forEach var="h" begin="0" end="#{mainBean.fields.size()-1}">
                     <h:outputText style="font-weight: bold" value="#{mainBean.fields.get(h).label}" />

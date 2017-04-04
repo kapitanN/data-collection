@@ -12,6 +12,10 @@
                 <title>Add fields</title>
         </h:head>
         <h:form>
+            <p:button value="Responses" outcome="responses"/>
+            <p:button value="Fields" outcome="fields"/>
+        </h:form><br/>
+        <h:form>
             <p:outputLabel value="Create/Edit field"/>
             <br/>
             <p:outputLabel value="Label* :"/><br/>
@@ -35,9 +39,7 @@
             <p:selectBooleanCheckbox title="label name" value = "#{fieldBean.required}"/><br/>
             <p:outputLabel value="Is Active* :"/><br/>
             <p:selectBooleanCheckbox title="type name" value = "#{fieldBean.active}"/><br/>
-
-                    <p:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
-
+                    <p:commandButton value="Save" type="submit" action="#{fieldBean.addField()}"/>
             <p:commandButton value="Cancel" type="reset"/>
         </h:form>
     </h:body>

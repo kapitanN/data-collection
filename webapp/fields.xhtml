@@ -16,22 +16,22 @@
         </h:form>
         <br/>
         <h:form>
-        <p:panelGrid columns="6" layout="grid">
-            <h:outputText style="font-weight: bold" value="Label"/>
-            <h:outputText style="font-weight: bold" value="Type"/>
-            <h:outputText style="font-weight: bold" value="Required"/>
-            <h:outputText style="font-weight: bold" value="Is Active"/>
-            <h:outputText value=""/>
-            <h:outputText value=""/>
-            <c:forEach var="i" begin="0" end="#{mainBean.fields.size()-1}">
+            <p:panelGrid columns="6" layout="grid">
+                <h:outputText style="font-weight: bold" value="Label"/>
+                <h:outputText style="font-weight: bold" value="Type"/>
+                <h:outputText style="font-weight: bold" value="Required"/>
+                <h:outputText style="font-weight: bold" value="Is Active"/>
+                <h:outputText value=""/>
+                <h:outputText value=""/>
+                <c:forEach var="i" begin="0" end="#{mainBean.fields.size()-1}">
                     <h:outputText value="#{mainBean.fields.get(i).label}" />
                     <h:outputText value="#{mainBean.fields.get(i).type}" />
-                    <h:outputText value="#{mainBean.fields.get(i).required}" />
-                    <h:outputText value="#{mainBean.fields.get(i).active}" />
+                    <h:selectBooleanCheckbox value="#{mainBean.fields.get(i).required}" />
+                    <h:selectBooleanCheckbox value="#{mainBean.fields.get(i).active}" />
                     <h:commandLink value="edit" action="#{fieldBean.showAddField(mainBean.fields.get(i).id)}"/>
                     <h:commandLink value="delete" action="#{mainBean.deleteField(mainBean.fields.get(i))}"/>
-            </c:forEach>
-        </p:panelGrid>
+                </c:forEach>
+            </p:panelGrid>
         </h:form>
     </h:body>
 </f:view>
