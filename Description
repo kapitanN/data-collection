@@ -1,0 +1,14 @@
+What was done:
+  1. Developed back-end methods end front-end view for render all created fields. In this page we can delete any field or redirect to
+edit field page or create field's page.
+  2. Developed create field page. In this page we can select required parameteres for field. When Radio button or Combobox is chosen
+text area appears, where we can write options. After submitting all data is saved in database and we are redirected to all fields page,
+where is displayed new field. After editing data is updated in database and we are redirected to all fields page. Options for radio button
+and combobox save in database too. In page for submitting user's data this options reads and output suitable field type.
+  3. Developed responses page. Here is display data for all users. if user has empty field, cell is filled in N/A.
+  4. Developed page for submit user's data.  Data submit via websocket and display on the page congratulation for submit data without
+refresh the page.
+
+What wasn't done:
+  1. User can't submit data with radio and combo, because it sends just last value in the list. I couldn't solve it in time.
+
