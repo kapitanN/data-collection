@@ -10,12 +10,11 @@
     <h:head><title>Fields</title></h:head>
 
     <h:body>
-        <h:button value="Fields" title="Fields" outcome="fields" action = "#{fieldBean.getField}"/><br/>
         <h:form>
-            <h:button value="Responses" outcome="responses"/>
-            <h:commandButton value="Add Field" action="#{fieldBean.showAddField(0)}"/>
+            <p:button value="Responses" outcome="responses"/>
+            <p:commandButton value="Add Field" action="#{fieldBean.showAddField(0)}"/>
         </h:form>
-
+        <br/>
         <h:form>
         <p:panelGrid columns="6" layout="grid">
             <h:outputText style="font-weight: bold" value="Label"/>
@@ -33,16 +32,6 @@
                     <h:commandLink value="delete" action="#{mainBean.deleteField(mainBean.fields.get(i))}"/>
             </c:forEach>
         </p:panelGrid>
-        </h:form>
-        <h:form>
-            <c:forEach var="i" begin="0" end="#{mainBean.fields.size()-1}">
-                <s:set var="fields" value="#{mainBean.fields}"/>
-                <p:outputLabel value="#{mainBean.fields.get(i).label}"/>
-                <h:inputText id="id" title="2" value="#{fieldBean.values[i]}"/><br/>
-            </c:forEach>
-            <h:commandButton value="Save" type="submit" action="#{fieldBean.add(fields)}">
-                <f:attribute name="Name" value=""/>
-            </h:commandButton>
         </h:form>
     </h:body>
 </f:view>

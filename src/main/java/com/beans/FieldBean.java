@@ -16,7 +16,7 @@ import java.util.*;
  */
 
 @ManagedBean(name = "fieldBean")
-@RequestScoped
+@SessionScoped
 public class FieldBean {
     String label;
     String type;
@@ -27,9 +27,22 @@ public class FieldBean {
     String value;
     List<String> values;
     Map<String,String> userData;
+    public List<Date> usersDate;
+    public Date date;
 
-    public Date getUsersDate() {
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public List<Date> getUsersDate() {
         return usersDate;
+    }
+    public void setUsersDate(List usersDate) {
+        this.usersDate = usersDate;
     }
 
     public String getValue() {
@@ -39,11 +52,9 @@ public class FieldBean {
     public void setValue(String value) {
         this.value = value;
     }
-    public void setUsersDate(Date usersDate) {
-        this.usersDate = usersDate;
-    }
 
-    public Date usersDate;
+
+
 
     public List<String> getValues() {
         return values;
@@ -55,22 +66,21 @@ public class FieldBean {
 
     {
         values = new ArrayList<String>();
+        usersDate = new ArrayList<Date>();
         for(int i = 0; i<10; i++)
             values.add("");
+            usersDate.add(new Date());
     }
 
-//    public void setUsersDate(int i){
-//        String date = usersDate.toString();
-//        values.add(i,usersDate);
-//        System.out.println("DATE: " + date);
-//    }
     public void add(List<FieldEntity> fields){
-//        LOGGER.info("add values" + value);
-//        values.add(value);
+
+        FieldsDAO fieldsDAO = new FieldsDAO();
         userData = new HashMap<String, String>();
         for (int i = 0; i<fields.size(); i++){
             userData.put(fields.get(i).getLabel(),values.get(i));
         }
+        fieldsDAO.setUserData(userData);
+
         for (Map.Entry entry:userData.entrySet()){
             System.out.println("Key: " + entry.getKey() + " Value: "+ entry.getValue());
         }
@@ -80,7 +90,8 @@ public class FieldBean {
         for (Object item : values) {
             System.out.println(item);
         }
-        System.out.println(value);
+        System.out.println("combobox: " + value);
+        System.out.println("date: " + usersDate);
 
     }
 
@@ -164,7 +175,9 @@ public class FieldBean {
 
     public void setTypesOptions(int fieldId, String value){
         FieldsDAO fieldsDAO = new FieldsDAO();
-        fieldsDAO.setTypesOptions(fieldId,value);
+        if (!value.equals("")) {
+            fieldsDAO.setTypesOptions(fieldId, value);
+        }
     }
 
     public String getLabel() {

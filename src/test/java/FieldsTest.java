@@ -93,14 +93,6 @@ public class FieldsTest {
 
 
     @Test
-    public void getAllTypesTest(){
-        List<TypesEntity> allTypes = fieldsDAO.getAllTypes();
-        for (TypesEntity item : allTypes) {
-            System.out.println(item.getType());
-        }
-    }
-
-    @Test
     public void getFieldByLabelTest(){
         FieldEntity field = fieldsDAO.getFieldByLabel("Name");
         System.out.println(field.getId() + " " + field.getType());
@@ -108,7 +100,7 @@ public class FieldsTest {
 
     @Test
     public void getAllTypesOptions(){
-        List<TypesOptionsEntity> typesOptions = fieldsDAO.getAllTypesOptions(4);
+        List<TypesOptionsEntity> typesOptions = fieldsDAO.getAllTypesOptions(1);
         for (TypesOptionsEntity item : typesOptions) {
             System.out.println(item.getValue());
         }

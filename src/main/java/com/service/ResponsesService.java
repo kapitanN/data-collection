@@ -16,12 +16,17 @@ import java.util.List;
         FieldsDAO fieldsDAO = new FieldsDAO();
         List<String> labels = new ArrayList<String>();
         List<FieldEntity> fields = fieldsDAO.getAllFields();
-        for (int i = 0; i<fields.size(); i++){
-            List<ResponseEntity> response = fieldsDAO.getResponse(user_id+1,i+1);
+        List<Integer> fieldsId = new ArrayList<Integer>();
+
+        for (FieldEntity item : fields) {
+            fieldsId.add(item.getId());
+        }
+        for (FieldEntity entity : fields){
+            List<ResponseEntity> response = fieldsDAO.getResponse(user_id+1,entity.getId());
             if (response.size() == 0){
-                labels.add(i,"N/A");
+                labels.add("N/A");
             }else {
-                labels.add(i, response.get(0).getValue());
+                labels.add(response.get(0).getValue());
             }
         }
         return labels;

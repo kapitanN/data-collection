@@ -1,13 +1,10 @@
 package com.beans;
 
 import com.Entities.FieldEntity;
-import com.Entities.ResponseEntity;
-import com.Entities.TypesEntity;
 import com.dao.FieldsDAO;
 import com.service.ResponsesService;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -33,14 +30,6 @@ public class MainBean {
         List<FieldEntity> fields = fieldsDAO.getAllFields();
         return fields;
     }
-
-    public List<TypesEntity> getTypes(){
-        FieldsDAO fieldsDAO = new FieldsDAO();
-        List<TypesEntity> types = fieldsDAO.getAllTypes();
-        return types;
-    }
-
-
 
     public List<List<String>> getResponses(){
         FieldsDAO fieldsDAO = new FieldsDAO();

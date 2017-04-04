@@ -9,7 +9,6 @@
 <f:view>
     <h:head><title>Responses</title></h:head>
     <h:body>
-        <h:outputLabel id="message" />
         <h:form>
             <p:panelGrid columns="#{mainBean.fields.size()}" layout="grid">
                 <c:forEach var="h" begin="0" end="#{mainBean.fields.size()-1}">
@@ -22,47 +21,6 @@
                 </c:forEach>
             </p:panelGrid>
         </h:form>
-        <h:form>
-            <h:inputText type="text" id="userinput" /> <br/>
-            <h:commandButton type="submit" value="Send Message" onclick="start()" />
-        </h:form>
-
     </h:body>
 </f:view>
-<script type="text/javascript">
-    var webSocket = new WebSocket('ws://localhost:8080/websocket');
-
-    webSocket.onerror = function(event) {
-        onError(event)
-    };
-
-    webSocket.onopen = function(event) {
-        onOpen(event)
-    };
-
-    webSocket.onmessage = function(event) {
-        onMessage(event)
-    };
-
-    function onMessage(event) {
-        //alert(event.data);
-
-    }
-
-    function onOpen(event) {
-        document.getElementById('message').innerHTML = 'Now Connection established';
-    }
-
-    function onError(event) {
-        alert(event.data);
-
-    }
-
-    function start() {
-        //var text = document.getElementById("userinput").value;
-
-        webSocket.send("Rodion");
-        return false;
-    }
-</script>
 </html>

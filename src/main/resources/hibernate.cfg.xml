@@ -26,7 +26,6 @@
     <mapping class="com.Entities.FieldEntity"/>
     <mapping class="com.Entities.ResponseEntity"/>
     <mapping class="com.Entities.UsersEntity"/>
-      <mapping class="com.Entities.TypesEntity"/>
       <mapping class="com.Entities.TypesOptionsEntity"/>
 
   </session-factory>

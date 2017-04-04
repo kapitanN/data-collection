@@ -144,22 +144,6 @@ public class FieldsDAO {
         }
     }
 
-    public List<TypesEntity> getAllTypes(){
-        Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        Query query = session.createQuery("from TypesEntity");
-        try {
-            List<TypesEntity> allTypes = query.list();
-            session.getTransaction().commit();
-            return allTypes;
-        } catch (HibernateException e){
-            LOGGER.error(e.toString());
-            session.getTransaction().rollback();
-            throw new HibernateException("Can't get types",e);
-        } finally {
-            if (session.isOpen()){session.close();}
-        }
-    }
 
     public List<TypesOptionsEntity> getAllTypesOptions(int fieldId){
         Session session = HibernateUtil.getSessionFactory().getCurrentSession();

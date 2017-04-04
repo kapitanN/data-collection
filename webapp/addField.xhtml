@@ -12,10 +12,10 @@
                 <title>Add fields</title>
         </h:head>
         <h:form>
-            <h:outputLabel value="Create/Edit field"/>
+            <p:outputLabel value="Create/Edit field"/>
             <br/>
-            <h:outputLabel value="Label* :"/><br/>
-            <h:inputText title="label name" value = "#{fieldBean.label}" required="true"/><br/>
+            <p:outputLabel value="Label* :"/><br/>
+            <p:inputText title="label name" value = "#{fieldBean.label}" required="true"/><br/>
             <p:outputLabel for = "console" value="Type* :"/><br/>
             <p:selectOneMenu id="console" value="#{fieldBean.type}" style="width:200px" onchange="
                 var text = document.getElementById('j_idt5:text');
@@ -24,21 +24,21 @@
                 }
             else text.style.display = 'none'; ">
                 <f:selectItem itemLabel="Single line text" itemValue="Single line text" />
-                <f:selectItem itemLabel="Multi line text" itemValue="Textareas" />
+                <f:selectItem itemLabel="Multi line text" itemValue="Multi line text" />
                 <f:selectItem itemLabel="Radio button" itemValue="Radio button" />
                 <f:selectItem itemLabel="Checkbox" itemValue="Checkbox" />
                 <f:selectItem itemLabel="Combobox" itemValue="Combobox" />
                 <f:selectItem itemLabel="Date" itemValue="Date" />
             </p:selectOneMenu><br/>
             <p:inputTextarea id="text" rows="7" cols="70" value="#{fieldBean.option}" style="display: none"/><br/>
-            <h:outputLabel value="Required* :"/><br/>
-            <h:selectBooleanCheckbox title="label name" value = "#{fieldBean.required}"/><br/>
-            <h:outputLabel value="Is Active* :"/><br/>
-            <h:selectBooleanCheckbox title="type name" value = "#{fieldBean.active}"/><br/>
+            <p:outputLabel value="Required* :"/><br/>
+            <p:selectBooleanCheckbox title="label name" value = "#{fieldBean.required}"/><br/>
+            <p:outputLabel value="Is Active* :"/><br/>
+            <p:selectBooleanCheckbox title="type name" value = "#{fieldBean.active}"/><br/>
 
-                    <h:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
+                    <p:commandButton value="Save" type="submit" action="#{fieldBean.addField}"/>
 
-            <h:commandButton value="Cancel" type="reset"/>
+            <p:commandButton value="Cancel" type="reset"/>
         </h:form>
     </h:body>
 </f:view>
