@@ -41,7 +41,7 @@
                             <p:inputText title="dd.mm.yyyy" value="#{fieldBean.values[i]}"/><br/>
                         </c:when>
                         <c:otherwise>
-                            <p:inputText title="#{mainBean.fields.get(i).label}" value ="#{fieldBean.values[i]}" required="true"/><br/>
+                            <p:inputText title="#{mainBean.fields.get(i).label}" value ="#{fieldBean.values[i]}"/><br/>
                         </c:otherwise>
                     </c:choose>
                 </c:if>

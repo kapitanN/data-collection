@@ -40,26 +40,22 @@
                         <c:when test="${mainBean.fields.get(i).type=='Checkbox'}" >
                             <h:selectBooleanCheckbox class="value" name="byName" title="type name" value = "#{fieldBean.values[i]}"/><br/>
                         </c:when>
-
                         <c:when test="${mainBean.fields.get(i).type=='Radio button'}" >
-                            <p:selectOneRadio class="value" name="byName" id="radio" value="#{fieldBean.values[i]}"  layout="grid" columns="1">
-                                <c:forEach items="#{fieldBean.getTypesOption(mainBean.fields.get(i).label)} " var="options">
+                            <p:selectOneRadio id="radio" value="#{fieldBean.values[i]}"  layout="grid" columns="1">
+                                <c:forEach items="#{fieldBean.getTypesOption(mainBean.fields.get(i).label)}" var="options">
                                     <f:selectItem itemLabel="#{options}" itemValue="#{options}" />
                                 </c:forEach>
                             </p:selectOneRadio><br/>
                         </c:when>
-                        <c:forEach items="#{fieldBean.getTypesOption(mainBean.fields.get(i).label)}" var="options">
-                            <f:selectItems itemLabel="#{options}" itemValue="#{options}" />
-                        </c:forEach>
                         <c:when test="${mainBean.fields.get(i).type=='Combobox'}" >
                             <p:selectOneMenu class="value" name="byName" id="console" value="#{fieldBean.values[i]}" style="width:125px">
-                                <c:forEach var="item" begin="0" end="#{fieldBean.getTypesOption(mainBean.fields.get(i).label).size()}">
-                                    <f:selectItems value="#{fieldBean.getTypesOption(mainBean.fields.get(i).label).get(item)}" />
+                                <c:forEach items="#{fieldBean.getTypesOption(mainBean.fields.get(i).label)}" var="options">
+                                    <f:selectItem itemLabel="#{options}" itemValue="#{options}" />
                                 </c:forEach>
                             </p:selectOneMenu><br/>
                         </c:when>
                         <c:when test="${mainBean.fields.get(i).type=='Date'}">
-                            <p:calendar class="value" name="byName" id="date" showOn="button" value="#{fieldBean.date}"/><br/>
+                            <p:calendar class="value" name="byName" id="date" showOn="button" /><br/>
                         </c:when>
 
                     </c:choose>

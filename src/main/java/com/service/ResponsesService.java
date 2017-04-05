@@ -18,9 +18,6 @@ import java.util.List;
         List<FieldEntity> fields = fieldsDAO.getAllFields();
         List<Integer> fieldsId = new ArrayList<Integer>();
 
-        for (FieldEntity item : fields) {
-            fieldsId.add(item.getId());
-        }
         for (FieldEntity entity : fields){
             List<ResponseEntity> response = fieldsDAO.getResponse(user_id+1,entity.getId());
             if (response.size() == 0){

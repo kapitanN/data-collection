@@ -55,7 +55,11 @@ public class FieldBean {
         FieldsDAO fieldsDAO = new FieldsDAO();
         userData = new HashMap<String, String>();
         for (int i = 0; i<fields.size(); i++){
+            if (values.get(i).equals("")){
+                userData.put(fields.get(i).getLabel(),"N/A");
+            }else{
             userData.put(fields.get(i).getLabel(),values.get(i));
+            }
         }
         fieldsDAO.setUserData(userData);
     }
