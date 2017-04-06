@@ -30,12 +30,12 @@ public class FieldsTest {
         this.fieldsDAO = new FieldsDAO();
     }
 
-    @Test
-    public void getFieldTest(){
-        LOGGER.info("get user test");
-        FieldEntity fieldEntity = fieldsDAO.getField(1);
-        assertEquals(CORRECT_LABEL, fieldEntity.getLabel());
-    }
+//    @Test
+//    public void getFieldTest(){
+//        LOGGER.info("get user test");
+//        FieldEntity fieldEntity = fieldsDAO.getField(1);
+//        assertEquals(CORRECT_LABEL, fieldEntity.getLabel());
+//    }
 
     @Test
     public void getFieldsTest(){
@@ -46,23 +46,23 @@ public class FieldsTest {
         }
     }
 
-    @Test
-    public void updateFieldTest(){
-        LOGGER.info("set user test");
-        fieldsDAO.updateField(15,"City","Combobox",false,true);
-    }
+//    @Test
+//    public void updateFieldTest(){
+//        LOGGER.info("set user test");
+//        fieldsDAO.updateField(15,"City","Combobox",false,true);
+//    }
 
 
-    @Test
-    public void deleteFieldTest(){
-        FieldEntity entity = new FieldEntity();
-        entity.setId(1);
-        entity.setLabel("City");
-        entity.setType("Combobox");
-        entity.setRequired(true);
-        entity.setActive(true);
-        fieldsDAO.deleteField(entity);
-    }
+//    @Test
+//    public void deleteFieldTest(){
+//        FieldEntity entity = new FieldEntity();
+//        entity.setId(1);
+//        entity.setLabel("City");
+//        entity.setType("Combobox");
+//        entity.setRequired(true);
+//        entity.setActive(true);
+//        fieldsDAO.deleteField(entity);
+//    }
 
     @Test
     public void getResponses(){
@@ -86,11 +86,11 @@ public class FieldsTest {
     }
 
 
-    @Test
-    public void getFieldByLabelTest(){
-        FieldEntity field = fieldsDAO.getFieldByLabel("Name");
-        System.out.println(field.getId() + " " + field.getType());
-    }
+//    @Test
+//    public void getFieldByLabelTest(){
+//        FieldEntity field = fieldsDAO.getFieldByLabel("Name");
+//        System.out.println(field.getId() + " " + field.getType());
+//    }
 
     @Test
     public void getAllTypesOptions(){
@@ -122,11 +122,11 @@ public class FieldsTest {
         }
     }
 
-    @Test
-    public void setUserData(){
-        Map<String,String> userMap = new HashMap<String, String>();
-        userMap.put("Sample combobox", "Male");
-        userMap.put("Full name", "Nikita Shapovalov");
-        fieldsDAO.setUserData(userMap);
-    }
+//    @Test
+//    public void setUserData(){
+//        Map<String,String> userMap = new HashMap<String, String>();
+//        userMap.put("Sample combobox", "Male");
+//        userMap.put("Full name", "Nikita Shapovalov");
+//        fieldsDAO.setUserData(userMap);
+//    }
 }
